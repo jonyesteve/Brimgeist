@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using static GameEvents;
-
+using TMPro;
 
 public class PlayerUIController : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] Image playerHp;
     [SerializeField] Image playerFuel;
     [SerializeField] Image playerShield;
+    [SerializeField] TextMeshProUGUI tmpText;
 
     private void OnEnable()
     {
@@ -34,11 +35,13 @@ public class PlayerUIController : MonoBehaviour
         var tempColor = playerShield.color;
         tempColor.a = ((float)hp / maxHp) * 255;
         playerShield.color = tempColor;
+        tmpText.text = $"{(int)(((float)hp / (float)maxHp)*100)}%";
     }
     void UpdateFuel(float value, float maxValue)
     {
         playerFuel.fillAmount = value / maxValue;
     }
 
+    
 
 }

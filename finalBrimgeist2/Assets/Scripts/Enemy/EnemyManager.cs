@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using UnityEngine.Pool;
 using static Types;
 using System;
-using System.Linq;
-using System.Threading;
-using Unity.VisualScripting;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -14,7 +11,9 @@ public class EnemyManager : MonoBehaviour
     public BaseStats[] defaultStats;
     public static EnemyManager current;
     public ObjectPool<GameObject> enemyPool;
-    [SerializeField]public List<GameObject> loadedEnemies = new();
+    List<GameObject> loadedEnemies = new();
+    public List<EnemyPack> enemyPacks = new();
+    public Transform enemySpawn;
     private bool _usePool;
     public GameObject enemyPrefab;
     public Sprite[] _sprites;
@@ -28,26 +27,19 @@ public class EnemyManager : MonoBehaviour
     public static event Action WaveChange;
 
     [Serializable]
-    public class Enemy : IEnemy
+    public class Enemy
     {
-        public int quantity { get => quant; set=>quant = value; }
-        public EnemyType type { get => enemyType; set=> enemyType = value;}
-
-        [SerializeField] int quant;
-        [SerializeField] EnemyType enemyType;
-        [SerializeField] HealerPack healerpack;
-        
+        public int quantity;
+        public EnemyType type;
     }
     [Serializable]
     public class EnemyWave
     {
-        public int wave;
         public List<Enemy> enemies;
+        public List<EnemyPack> enemyPacks;
     }
-    [SerializeField] List<EnemyWave> enemyWaves;
-    //enemies.Find(enemy => enemy.wave == 0).enemies.Find(i => i.enemyType == EnemyType.Striker).count--;
+    public List<EnemyWave> waves;
 
-    
     private void Awake()
     {
         _usePool = true;
@@ -84,65 +76,29 @@ public class EnemyManager : MonoBehaviour
 
     private void OnEnable()
     {
-
+        StartCoroutine(SpawningRoutine());
     }
 
-    private void FixedUpdate()
+    public IEnumerator SpawningRoutine()
     {
-        _spawnTimer += Time.fixedDeltaTime;
-        if (_spawnTimer > 2 + waveTimerOffset)
+        float spawnTimer = 0;
+        var enemy = waves[currentWave].enemies.Find(enemy => enemy.type == EnemyType.Striker);
+        while (_spawnEnemies == true)
         {
-            _spawnTimer = 0;
-            WaveChanged();
+            spawnTimer += Time.fixedDeltaTime;
+            if(spawnTimer > UnityEngine.Random.Range(0.5f, 2f))
+            {
+                spawnTimer = 0;
+                if(enemy.quantity > 0)
+                {
+                    enemyCreator.SpawnEnemy(enemy.type);
+                    enemy.quantity--;
+                }              
+            }
+    
+            yield return new WaitForFixedUpdate();
         }
     }
-
-    //EnemyController SpawnEnemy(EnemyType type)
-    //{
-    //    var enemyObj = enemyCreator.CreateNewEnemy();
-    //    enemyObj.AssignValues(defaultStats[(int)type], type, type == EnemyType.Boss1 || type == EnemyType.Boss2, GetSpriteFromType(type));
-    //    return enemyObj;
-    //}
-
-    //HealerPack SpawnPack(int quantity, int frontlineQuant,EnemyType frontlineType, Transform[] positions)
-    //{
-    //    List<EnemyController> frontlineEnemies= new List<EnemyController>();
-    //    var enemyPack = new HealerPack(quantity, frontlineQuant, frontlineType, positions);
-    //    for(int i =0; i<frontlineQuant; i++)
-    //    {
-    //        enemyPack.quantity--;
-    //        frontlineEnemies.Add(SpawnEnemy(frontlineType));
-    //    }
-    //    SpawnEnemy(EnemyType.Healer);
-    //
-    //    return enemyPack;
-    //}
-
-
-    //public IEnumerator SpawningRoutine()
-    //{
-    //    float spawnTimer = 0;
-    //    while(_spawnEnemies == true)
-    //    {
-    //        spawnTimer += Time.fixedDeltaTime;
-    //
-    //        var currentEnemies = enemyWaves.Find(enemyWave => enemyWave.wave == currentWave).enemies;
-    //        var commonEnemy = currentEnemies.Find(enemy => enemy.type == EnemyType.Striker);
-    //        if (commonEnemy.quantity != 0 && spawnTimer >1.5f)
-    //        {
-    //            spawnTimer = 0;
-    //            commonEnemy.quantity--;
-    //            SpawnEnemy(commonEnemy.type);
-    //        }
-    //        if(currentEnemies.Contains(currentEnemies.Find(enemy => enemy.type == EnemyType.Healer)))
-    //        {
-    //            var enemy = currentEnemies.Find(enemy => enemy.type == EnemyType.Healer);
-    //            
-    //        }
-    //
-    //        yield return new WaitForFixedUpdate();
-    //    }
-    //}
 
     Sprite GetSpriteFromType(EnemyType t) => _sprites[(int)t];
 
@@ -152,3 +108,5 @@ public class EnemyManager : MonoBehaviour
         WaveChange();
     }
 }
+
+

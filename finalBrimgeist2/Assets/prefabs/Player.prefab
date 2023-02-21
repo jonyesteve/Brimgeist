@@ -4863,19 +4863,19 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 60
+      - m_Value: 25
         m_Name: TrailsSpawnRate
         m_Overridden: 1
-      - m_Value: 0.5
+      - m_Value: 0.55
         m_Name: Size
         m_Overridden: 1
-      - m_Value: 2000
+      - m_Value: 100
         m_Name: SpawnRate
         m_Overridden: 1
-      - m_Value: 0.2
+      - m_Value: 0.1
         m_Name: TrailsLifetime
         m_Overridden: 1
-      - m_Value: 500
+      - m_Value: 600
         m_Name: SpawnRate2
         m_Overridden: 1
     m_Vector2f:
@@ -4884,10 +4884,10 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 11.313708, y: 6.477653, z: 0.39930737, w: 0}
+      - m_Value: {x: 256, y: 137.40797, z: 37.43396, w: 0}
         m_Name: Color
         m_Overridden: 1
-      - m_Value: {x: 20.912956, y: 6.965098, z: 0, w: 0}
+      - m_Value: {x: 41.73181, y: 18.79024, z: 6.1177526, w: 0}
         m_Name: Color02
         m_Overridden: 1
     m_Uint:
@@ -9845,7 +9845,6 @@ GameObject:
   m_Component:
   - component: {fileID: 179138874102964630}
   - component: {fileID: 179138874102964633}
-  - component: {fileID: 330883319}
   m_Layer: 6
   m_Name: playerSprite
   m_TagString: Untagged
@@ -9920,19 +9919,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &330883319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179138874102964631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ac0ffb2d498b7148b9ee5849af3ce53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocity: {x: 0.5, y: 0}
 --- !u!1 &179138874682434377
 GameObject:
   m_ObjectHideFlags: 0
@@ -9989,33 +9975,72 @@ MonoBehaviour:
   stats:
     attackSpeed:
       baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
     moveSpeed:
       baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxHp:
+      baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxShieldHp:
+      baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    damage:
+      baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
     armor:
       baseValue: 0
-    minDamage:
-      baseValue: 0
-    maxDamage:
-      baseValue: 0
-    maxHp: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
     currHp: 0
-    maxShieldHp: 0
     currShieldHp: 0
+    maxRayFuel:
+      baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxBullets:
+      baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxFuel:
+      baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxExp:
+      baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    fuelMultiplier:
+      baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    xpMultiplier:
+      baseValue: 0
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
     currBullets: 0
-    maxBullets: 0
-    maxRayFuel: 0
-    currRayFuel: 0
-    maxFuel: 0
-    currFuel: 0
-    maxExp: 0
     currExp: 0
-    fuelMultiplier: 0
-    xpMultiplier: 0
-    msMultiplier: 0
-  qRef: {fileID: 0}
-  currentWeapon: 0
-  currentShield: 0
+    currFuel: 0
   shield: {fileID: 1485974341}
+  attackBehav:
+    attackTimer: 0
 --- !u!114 &8427375399055338219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10031,29 +10056,69 @@ MonoBehaviour:
   characterStats:
   - attackSpeed:
       baseValue: 4
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
     moveSpeed:
-      baseValue: 6
+      baseValue: 9
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxHp:
+      baseValue: 100
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxShieldHp:
+      baseValue: 35
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    damage:
+      baseValue: 8
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
     armor:
       baseValue: 5
-    minDamage:
-      baseValue: 12
-    maxDamage:
-      baseValue: 20
-    maxHp: 100
-    currHp: 0
-    maxShieldHp: 50
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    currHp: 5
     currShieldHp: 0
+    maxRayFuel:
+      baseValue: 5
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxBullets:
+      baseValue: 5
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxFuel:
+      baseValue: 50
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    maxExp:
+      baseValue: 500
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    fuelMultiplier:
+      baseValue: 1
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
+    xpMultiplier:
+      baseValue: 1
+      lastFinalValue: 0
+      finalValue: 0
+      recentlyChanged: 0
     currBullets: 0
-    maxBullets: 500
-    maxRayFuel: 50
-    currRayFuel: 0
-    maxFuel: 100
-    currFuel: 0
-    maxExp: 1000
     currExp: 0
-    fuelMultiplier: 1
-    xpMultiplier: 1
-    msMultiplier: 1
+    currFuel: 0
   player: {fileID: 179138874682434376}
   panel: {fileID: 0}
 --- !u!50 &8220641027679140845

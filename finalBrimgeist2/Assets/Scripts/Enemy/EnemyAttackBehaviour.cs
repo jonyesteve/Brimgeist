@@ -23,8 +23,16 @@ public class EnemyAttackBehaviour : AttackBehaviour
                     {
                         if ((int)type < 4)
                         {
-                            CreateBullet(1, stats);
-                            CreateBullet(2, stats);
+                            if(exchange)
+                            {
+                                exchange = false;
+                                CreateBullet(1, stats);
+                            }
+                            else
+                            {
+                                exchange = true;
+                                CreateBullet(2, stats);
+                            }
                         }
                         else
                         {
@@ -38,7 +46,6 @@ public class EnemyAttackBehaviour : AttackBehaviour
                 case >= (EnemyType)10:
                     if (canAttack)
                     {
-                        bool exchange = false;
                         if (!exchange)
                         {
                             exchange = true;

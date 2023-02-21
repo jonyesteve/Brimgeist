@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f72066ae64ad434e8be13c66dd91392, type: 3}
+  m_Name: EnemyPack
+  m_EditorClassIdentifier: 
+  enemyQuant: 1
+  containsHealer: 0
+  containsTank: 0
+  frontlineQuant: 4
+  frontlineType: 0
+  positionReference: {x: 9.98, y: 4.15, z: 0}
+  positions:
+  - {x: 7.9799995, y: 4.15, z: 0}
+  - {x: 8.98, y: 4.85, z: 0}
+  - {x: 8.98, y: 3.45, z: 0}
