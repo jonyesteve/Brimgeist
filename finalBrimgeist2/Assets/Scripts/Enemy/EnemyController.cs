@@ -30,17 +30,17 @@ public class EnemyController : Entity
         this.isBoss = isBoss;
         this.sprite = sprite;
     }
-    private void Start()
-    {
-        GetComponentInChildren<SpriteRenderer>().sprite = sprite;
-        stats.currHp = stats.maxHp;
-    }
     private void OnEnable()
     {
+        GetComponentInChildren<SpriteRenderer>().sprite = sprite;
+        if (type == EnemyType.Tank) transform.localScale *= 1.5f;
+        if (type == EnemyType.Warrior) transform.localScale *= 1.2f;
+        stats.currHp = stats.maxHp;
         moveBehaviour = new EnemyMovement(rb, (int)type);
         attackBehav = new EnemyAttackBehaviour(gameObject, bulletSpawnPos, bulletPrefab, rb, type);
         stats.currHp = stats.maxHp;
         moveBehaviour.IntialMovement();
+        print("XD");
     }
     private void FixedUpdate()
     {

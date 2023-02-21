@@ -158,19 +158,5 @@ public class EnemyPack : ScriptableObject
 
     }
     public Sprite GetSpriteFromType(EnemyType t) => EnemyManager.current._sprites[(int)t];
-    public EnemyController SpawnEnemy(EnemyType type, Vector3 position)
-    {
-        var manager = EnemyManager.current;
-        var enemyObj = manager.enemyCreator.CreateNewEnemy(position);
-        enemyObj.AssignValues(manager.defaultStats[(int)type], type, type == EnemyType.Boss1 || type == EnemyType.Boss2, GetSpriteFromType(type));
-        return enemyObj;
-    }
-    public EnemyController SpawnEnemy(EnemyType type)
-    {
-        var manager = EnemyManager.current;
-        var enemyObj = manager.enemyCreator.CreateNewEnemy();
-        enemyObj.AssignValues(manager.defaultStats[(int)type], type, type == EnemyType.Boss1 || type == EnemyType.Boss2, GetSpriteFromType(type));
-        return enemyObj;
-    }
 }
 

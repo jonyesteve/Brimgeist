@@ -11,10 +11,10 @@ public class EnemyPackSpawner : MonoBehaviour
         }
         pack.positionReference = transform.position;
         pack.PackOrder(frontlineQuant);
-        pack.SpawnEnemy(pack.BaseEnemyPack, pack.positionReference);
+        EnemyCreator.CreateNewEnemy(pack.BaseEnemyPack, pack.positionReference);
         for (int i =0; i<frontlineQuant; i++)
         {
-            pack.SpawnEnemy(pack.frontlineType, pack.positions[i]);
+            EnemyCreator.CreateNewEnemy(pack.frontlineType, pack.positions[i]);
         }
     }
 }

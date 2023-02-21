@@ -5,8 +5,8 @@
 
         Striker = 0,
         Warrior = 1,
-        Healer = 4,
-        Tank = 5,
+        Healer = 2,
+        Tank = 3,
         Boss1 = 10,
         Boss2 = 11,
 

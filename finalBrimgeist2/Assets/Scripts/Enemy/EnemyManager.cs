@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Pool;
 using static Types;
 using System;
+using JetBrains.Annotations;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class EnemyManager : MonoBehaviour
 
     //spawn
     bool _spawnHealer, _spawnTank;
-    float _spawnTimer, waveTimerOffset;
+    [SerializeField] float _spawnTimer, waveTimerOffset;
     int currentWave;
     public static event Action WaveChange;
 
@@ -52,10 +53,12 @@ public class EnemyManager : MonoBehaviour
         }, enemy =>
         {
             enemy.SetActive(true);
+            enemy.GetComponent<EnemyController>().enabled = true;
 
         }, enemy =>
         {
             enemy.SetActive(false);
+            enemy.GetComponent<EnemyController>().enabled = false;
         }, enemy =>
         {
             Destroy(enemy);
@@ -81,21 +84,36 @@ public class EnemyManager : MonoBehaviour
 
     public IEnumerator SpawningRoutine()
     {
-        float spawnTimer = 0;
-        var enemy = waves[currentWave].enemies.Find(enemy => enemy.type == EnemyType.Striker);
+        _spawnTimer = 0;
+        float tankSpawnTimer = 0;
+        var enemies = waves[currentWave].enemies;
+        var striker = enemies.Find(enemy => enemy.type == EnemyType.Striker);
+        var tanks = enemies.Find(enemy => enemy.type == EnemyType.Tank);
+        var warriors = enemies.Find(enemy => enemy.type == EnemyType.Warrior);
         while (_spawnEnemies == true)
         {
-            spawnTimer += Time.fixedDeltaTime;
-            if(spawnTimer > UnityEngine.Random.Range(0.5f, 2f))
+            _spawnTimer += Time.fixedDeltaTime;
+            tankSpawnTimer += Time.fixedDeltaTime;
+            if(_spawnTimer > UnityEngine.Random.Range(1f, 2f))
             {
-                spawnTimer = 0;
-                if(enemy.quantity > 0)
+                if(UnityEngine.Random.Range(0, 1f) > 0.75f)
                 {
-                    enemyCreator.SpawnEnemy(enemy.type);
-                    enemy.quantity--;
-                }              
+                    enemyCreator.CreateNewEnemy(warriors.type);
+                    warriors.quantity--;
+                }
+                if(striker.quantity > 0)
+                {
+                    enemyCreator.CreateNewEnemy(striker.type);
+                    striker.quantity--;
+                }
+                _spawnTimer = 0;
             }
-    
+            if(tankSpawnTimer > UnityEngine.Random.Range(5f, 7f))
+            {
+                enemyCreator.CreateNewEnemy(tanks.type);
+                tanks.quantity--;
+                tankSpawnTimer = 0;
+            }
             yield return new WaitForFixedUpdate();
         }
     }
